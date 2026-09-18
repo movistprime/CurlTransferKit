@@ -171,6 +171,7 @@ static BOOL CCTKCurlClientPerform(CCTKCurlClient *client,
         curl_easy_setopt(client->curl, CURLOPT_HTTPGET, 1L);
     }
     curl_easy_setopt(client->curl, CURLOPT_RANGE, range.length ? range.UTF8String : NULL);
+    curl_easy_setopt(client->curl, CURLOPT_QUOTE, CCTKURLStringIsFTP(client->urlString) ? (&(struct curl_slist){ .data = "OPTS UTF8 ON", .next = NULL }) : NULL);
     if (CCTKURLStringIsFTP(client->urlString)) {
         curl_easy_setopt(client->curl, CURLOPT_FTP_USE_EPSV, client->usesEPSV ? 1L : 0L);
 #ifdef CURLOPT_FTP_SKIP_PASV_IP
